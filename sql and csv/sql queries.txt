@@ -1,0 +1,65 @@
+
+CREATE TABLE Order (
+    uniqueOrderId INT PRIMARY KEY,
+    orderDate DATE,
+    customerName VARCHAR(255),
+    customerShippingAddress VARCHAR(255),
+    totalOrderValue DECIMAL(10, 2),
+    shippingCost DECIMAL(10, 2),
+    shippingAgency VARCHAR(255),
+    status VARCHAR(255)
+);
+
+
+CREATE TABLE Product (
+    productId INT PRIMARY KEY AUTO_INCREMENT,
+    productName VARCHAR(255)
+);
+
+
+CREATE TABLE OrderProduct (
+    orderProductId INT PRIMARY KEY AUTO_INCREMENT,
+    orderId INT,
+    productId INT,
+    FOREIGN KEY (orderId) REFERENCES Order(uniqueOrderId),
+    FOREIGN KEY (productId) REFERENCES Product(productId)
+);
+
+
+CREATE TABLE Invoice (
+    uniqueInvoiceId INT PRIMARY KEY,
+    invoiceDate DATE,
+    orderDetailsId INT,
+    customerDetails VARCHAR(255),
+    gstType VARCHAR(255),
+    totalGSTAmount DECIMAL(10, 2),
+    totalInvoiceValue DECIMAL(10, 2),
+    status VARCHAR(255),
+    FOREIGN KEY (orderDetailsId) REFERENCES Order(uniqueOrderId)
+);
+
+
+CREATE TABLE Employee (
+    employeeId INT PRIMARY KEY AUTO_INCREMENT,
+    userName VARCHAR(255),
+    password VARCHAR(255)
+);
+
+
+CREATE TABLE Company (
+    companyId INT PRIMARY KEY AUTO_INCREMENT,
+    companyName VARCHAR(255),
+    companyAddress VARCHAR(255),
+    companyCity VARCHAR(255),
+    companyGST BIGINT,
+    PRIMARY KEY (companyId)
+);
+
+
+CREATE TABLE EmployeeCompany (
+    employeeCompanyId INT PRIMARY KEY AUTO_INCREMENT,
+    employeeId INT,
+    companyId INT,
+    FOREIGN KEY (employeeId) REFERENCES Employee(employeeId),
+    FOREIGN KEY (companyId) REFERENCES Company(companyId)
+);
